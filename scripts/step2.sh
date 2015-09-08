@@ -2,6 +2,8 @@
 
 currentdir=${PWD##*/}
 
+echo
+echo ==========
 echo EEG STEP 2
 echo ==========
 echo
