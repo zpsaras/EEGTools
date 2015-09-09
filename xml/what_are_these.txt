@@ -1,0 +1,11 @@
+The following are generic files:
+
+amplifier.xml
+concatenate.xml
+merge1.xml
+merge2.xml
+
+The following is a good example of a "finished" xml
+file with Julia's color preferences encoded:
+
+WSC001Baseline1_COLORS.xml

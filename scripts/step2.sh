@@ -47,6 +47,7 @@ echo Changing channels in Acquisition System from 20 to 29...
 
 echo TODO: Change nChannels in ndm_merge from 20 3 to 23 6
 
+
 echo Running ndm_mergedat
 ndm_mergedat $currentdir$xml_suffix
 
