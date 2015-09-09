@@ -104,7 +104,7 @@ else
 fi
 
 if [ -f ./amplifier.xml ]; then
-	echo Found amplifier.aml
+	echo Found amplifier.xml
 	xml_suffix=".xml"
 	mv amplifier.xml $currentdir$xml_suffix
 	echo Renamed amplifier.xml to $currentdir$xml_suffix
