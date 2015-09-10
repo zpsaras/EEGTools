@@ -29,7 +29,7 @@ echo
 
 tput sgr0
 
-echo This file script should be run from the top-most
+echo This script should be run from the top-most
 echo level of your EEG Data folder hierarchy.
 echo
 read -r -p "Are you ready to continue? [y/N] " response
@@ -117,25 +117,39 @@ else
 fi
 echo
 
-echo Copying generic XML...
-#Just looking for folders with a file we have changed
+echo Copying generic XML and running merge...
+#Just looking for folders with a file we have changed. The silent option here will say strange things
 if [ $change = false ]; then
-	find -name '*.analogin' |
-	while read fn; do dir=$(dirname "$fn") ; echo Copied amplifier.xml to "$dir/$(basename "$dir").xml" ;done
+	echo This output will look incorrect. It\'s for my testing purposes.
+	find -name '*.dat' |
+	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; echo Copied merge1.xml to "$dir/$(basename "$dir").xml" ; echo ndm_mergedat "$dir/$(basename "$dir").xml" ; echo Renamed "$fn" as "$dir/$(basename "$dir").dat" ;done
 else
+#Holy run-on line, Batman
 	find -name '*.analogin' |
-	while read fn; do dir=$(dirname "$fn") ; cp "../xml/amplifier.xml" "$dir/$(basename "$dir").xml" ; echo Copied amplifier.xml to "$dir/$(basename "$dir").xml" ;done
+	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; echo ; cp "../xml/merge1.xml" "$dir/$(basename "$dir").xml" ; echo Copied merge1.xml to "$dir/$(basename "$dir").xml" ; ndm_mergedat "$dir/$(basename "$dir").xml"; mv "$fn" "$dir/$(basename "$dir")-filtered.dat"; echo Renamed "$fn" as "$dir/$(basename "$dir")-filtered.dat"; mv "$dir/$(basename "$dir").dat" "$dir/$(basename "$dir")-wideband.dat" ;done
 fi
 echo
 
-echo Changing channels in Acquisition System from 20 to 23...
-xml_suffix=".xml"
+echo Copying generic XML and running merge again....
 if [ $change = false ]; then
-	find -name '*.xml'
+	echo Magic.
+	# hue
 else
-	find -name '*.xml' |
-	while read fn; do dir=$(dirname "$fn") ; ./xml-edit "$dir/$dir$xml_suffix" /parameters/acquisitionSystem/nChannels "23" "$dir/$dir$xml_suffix" ;done
+	find -name '*.digitalout' |
+	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; echo ; cp "../xml/merge2.xml" "$dir/$(basename "$dir").xml" ; echo Copied merge1.xml to "$dir/$(basename "$dir").xml" ; ndm_mergedat "$dir/$(basename "$dir").xml" ;done
 fi
-echo
 
-echo Done!
+echo Whew! We made it!
+
+#echo Changing channels in Acquisition System from 20 to 23...
+#xml_suffix=".xml"
+#if [ $change = false ]; then
+#	find -name '*.xml'
+#else
+#	find -name '*.xml' |
+#	while read fn; do dir=$(dirname "$fn") ; ./xml-edit "$dir/$dir$xml_suffix" /parameters/acquisitionSystem/nChannels "23" "$dir/$dir$xml_suffix" ;done
+#fi
+#echo
+
+
+
