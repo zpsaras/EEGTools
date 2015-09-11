@@ -14,20 +14,16 @@ echo Use this to double check for possible mistakes.
 echo Note that when using this option, the rename
 echo operations will claim to have renamed files
 echo when no rename has actually occurred.
+echo It is important to note that the -n argument 
+echo will not show the whole process\; it\'s purpose
+echo is to give you a reasonable idea if your
+echo diretories are set up correctly
 echo
-echo Checking for required tools...
 
-if [ ! -x ./xml-edit ]; then
-	echo -e '\E[31m'"Missing xml-edit! Aborting"
-	tput sgr0
-	exit
-fi
-
-echo
 echo -e '\E[35m'"It is strongly recommended that you make backups!"
-echo
+echo -e '\E[m'
 
-tput sgr0
+#tput sgr0
 
 echo This script should be run from the top-most
 echo level of your EEG Data folder hierarchy.
