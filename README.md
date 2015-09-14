@@ -28,3 +28,54 @@ Written for the Suzuki Exercise lab @ NYU
     ├── what_are_these.txt~			Hue.
     └── WSC001Baseline1_COLORS.xml	Settings and plugins for the final files with "Color by Julia (tm)" ;]
 </pre>
+
+## Usage
+Copy step1.sh from the "EEGTools/scripts/batch" folder into the root directory of your EEG folder hierarchy.
+
+Then, copy the _folder_ at "EEGTools/xml" into the root directory of your EEG folder hierarchy.
+
+You should have something that looks like this
+<pre>
+.
+├── step1.sh
+├── WSC014BPSO_150617_181407
+│   ├── amplifier.xml
+│   ├── info.rhd
+│   ├── supply.supply
+│   ├── time.time
+│   ├── WSC014BPSO.dat
+│   ├── WSC014BPSO.nrs
+│   └── WSC014BPSO.xml
+├── WSC014BPSO_150617_182643
+│   ├── amplifier.xml
+│   ├── info.rhd
+│   ├── supply.supply
+│   ├── time.time
+│   ├── WSC014BPSO.dat
+│   ├── WSC014BPSO.nrs
+│   └── WSC014BPSO.xml
+├── WSC014BPSO_150617_183312
+│   ├── amplifier.xml
+│   ├── info.rhd
+│   ├── supply.supply
+│   ├── time.time
+│   ├── WSC014BPSO.dat
+│   ├── WSC014BPSO.nrs
+│   └── WSC014BPSO.xml
+└── xml
+    ├── amplifier.xml
+    ├── concatenate.xml
+    ├── merge1.xml
+    ├── merge2.xml
+    ├── what_are_these.txt
+    ├── what_are_these.txt~
+    └── WSC001Baseline1_COLORS.xml
+</pre>
+
+Then, in a terminal
+```bash
+chmod 777 step1.sh
+./step1.sh
+```
+
+Any filenames containing a "_" will be truncated at that point. For instance, "WSC014BPSO_150617_183312" will become "WSC014BPSO". The directory name will not change. When I do this, I will update this document so that it is an accurate reflection.
