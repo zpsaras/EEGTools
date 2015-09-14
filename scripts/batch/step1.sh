@@ -1,5 +1,5 @@
 #!/bin/bash
-
+declare -i truncPos
 #TODO: Check for existence of generics
 
 echo
@@ -64,52 +64,185 @@ fi
 echo
 
 echo Renaming amplifier.dat files...
+
 if [ $change = false ]; then
 	find . -iname 'amplifier.dat' | 
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; echo "$fn" renamed as "$dir/$(basename "$dir")-wideband.dat" ;done
+	while read fn; do
+		name=$(basename "$fn") 
+		dir=$(dirname "$fn")
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			echo "$fn" renamed as "$dir/$(basename "$dir")-wideband.dat"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0:$truncPos}
+			echo "$fn" renamed as "$dir/$(basename "$truncStr")-wideband.dat"
+		fi
+	done
 else
 	find . -iname 'amplifier.dat' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; mv "$fn" "$dir/$(basename "$dir")-wideband.dat" ; echo "$fn" renamed as "$dir/$(basename "$dir")-wideband.dat" ;done
+	while read fn; do 
+		name=$(basename "$fn")
+		dir=$(dirname "$fn")
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			mv "$fn" "$dir/$(basename "$dir")-wideband.dat"
+			echo "$fn" renamed as "$dir/$(basename "$dir")-wideband.dat"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0:$truncPos}
+			mv "$fn" "$dir/$(basename "$truncStr")-wideband.dat"
+			echo "$fn" renamed as "$dir/$(basename "$truncStr")-wideband.dat"
+		fi
+	done
 fi
 echo
 
 echo Renaming auxiliary.dat files...
 if [ $change = false ]; then
 	find . -iname 'auxiliary.dat' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; echo "$fn" renamed as "$dir/$(basename "$dir")-filtered.dat" ;done
+	while read fn; do 
+		name=$(basename "$fn")
+		dir=$(dirname "$fn")
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			echo "$fn" renamed as "$dir/$(basename "$dir")-filtered.dat"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0;$truncPos}
+			echo "$fn" renamed as "$dir/$(basename "$truncStr")-filtered.dat"
+		fi
+
+	done
 else
 	find . -iname 'auxiliary.dat' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; mv "$fn" "$dir/$(basename "$dir")-filtered.dat" ; echo "$fn" renamed as "$dir/$(basename "$dir")-filtered.dat" ;done
+	while read fn; do 
+		name=$(basename "$fn") 
+		dir=$(dirname "$fn")
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			mv "$fn" "$dir/$(basename "$dir")-filtered.dat"
+			echo "$fn" renamed as "$dir/$(basename "$dir")-filtered.dat"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0:$truncPos}
+			mv "$fn" "$dir/$(basename "$truncStr")-filtered.dat"
+			echo "$fn" renamed as "$dir/$(basename "$truncStr")-filtered.dat"
+		fi
+
+	done
 fi
 echo
 
 echo Renaming digitalout.dat files
 if [ $change = false ]; then
 	find . -iname 'digitalout.dat' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; echo "$fn" renamed as "$dir/$(basename "$dir").digitalout" ;done
+	while read fn; do 
+		name=$(basename "$fn") 
+		dir=$(dirname "$fn")
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			echo "$fn" renamed as "$dir/$(basename "$dir").digitalout"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0;$truncPos}
+			echo "$fn" renamed as "$dir/$(basename "$truncStr").digitalout"
+		fi
+
+	done
 else
 	find . -iname 'digitalout.dat' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; mv "$fn" "$dir/$(basename "$dir").digitalout" ; echo "$fn" renamed as "$dir/$(basename "$dir").digitalout" ;done
+	while read fn; do 
+		name=$(basename "$fn") 
+		dir=$(dirname "$fn")
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			mv "$fn" "$dir/$(basename "$dir").digitalout"
+			echo "$fn" renamed as "$dir/$(basename "$dir").digitalout"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0;$truncPos}
+			mv "$fn" "$dir/$(basename "$truncStr").digitalout"
+			echo "$fn" renamed as "$dir/$(basename "$truncStr").digitalout"
+		fi
+
+	done
 fi
 echo
 
 echo Renaming analogin.dat files...
 if [ $change = false ]; then
 	find . -iname 'analogin.dat' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; echo "$fn" renamed as "$dir/$(basename "$dir").analogin" ;done
+	while read fn; do 
+		name=$(basename "$fn")
+		dir=$(dirname "$fn") 
+
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			echo "$fn" renamed as "$dir/$(basename "$dir").analogin"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0;$truncPos}
+			echo "$fn" renamed as "$dir/$(basename "$truncStr").analogin"
+		fi
+
+	done
 else
 	find . -iname 'analogin.dat' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; mv "$fn" "$dir/$(basename "$dir").analogin" ; echo "$fn" renamed as "$dir/$(basename "$dir").analogin" ;done
+	while read fn; do 
+		name=$(basename "$fn")
+		dir=$(dirname "$fn") 
+
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			mv "$fn" "$dir/$(basename "$dir").analogin"
+			echo "$fn" renamed as "$dir/$(basename "$dir").analogin"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0:$truncPos}
+			mv "$fn" "$dir/$(basename "$truncStr").analogin"
+			echo "$fn" renamed as "$dir/$(basename "$truncStr").analogin"
+		fi
+
+	done
 fi
 echo
 
 echo Renaming amplifier.nrs NOTE: This file may not exist.
 if [ $change = false ]; then
 	find . -iname 'amplifier.nrs' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; echo "$fn" renamed as "$dir/$(basename "$dir").nrs" ;done
+	while read fn; do 
+		name=$(basename "$fn") 
+		dir=$(dirname "$fn")
+
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			echo "$fn" renamed as "$dir/$(basename "$dir").nrs"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0;$truncPos}
+			echo "$fn" renamed as "$dir/$(basename "$truncStr").nrs"
+		fi
+
+	done
 else
 	find . -iname 'amplifier.nrs' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; mv "$fn" "$dir/$(basename "$dir").nrs" ; echo "$fn" renamed as "$dir/$(basename "$dir").nrs" ;done
+	while read fn; do 
+		name=$(basename "$fn")
+		dir=$(dirname "$fn")
+
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			mv "$fn" "$dir/$(basename "$dir").nrs"
+			echo "$fn" renamed as "$dir/$(basename "$dir").nrs"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0:$truncPos}
+			mv "$fn" "$dir/$(basename "$truncStr").nrs"
+			echo "$fn" renamed as "$dir/$(basename "$truncStr").nrs"
+		fi
+
+	done
 fi
 echo
 
@@ -118,11 +251,48 @@ echo Copying generic XML and running merge...
 if [ $change = false ]; then
 	echo This output will look incorrect. It\'s for my testing purposes.
 	find -name '*.dat' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; echo Copied merge1.xml to "$dir/$(basename "$dir").xml" ; echo ndm_mergedat "$dir/$(basename "$dir").xml" ; echo Renamed "$fn" as "$dir/$(basename "$dir").dat" ;done
+	while read fn; do 
+		name=$(basename "$fn")
+		dir=$(dirname "$fn")
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			echo Copied merge1.xml to "$dir/$(basename "$dir").xml"
+			echo ndm_mergedat "$dir/$(basename "$dir").xml"
+			echo Renamed "$fn" as "$dir/$(basename "$dir").dat"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0:$truncPos}
+			echo Copied merge1.xml to "$dir/$(basename "$truncStr").xml"
+			echo ndm_mergedat "$dir/$(basename "$truncStr").xml"
+			echo Renamed "$fn" as "$dir/$(basename "$truncStr").xml"
+		fi
+	done
 else
-#Holy run-on line, Batman
 	find -name '*.analogin' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; echo ; cp "../xml/merge1.xml" "$dir/$(basename "$dir").xml" ; echo Copied merge1.xml to "$dir/$(basename "$dir").xml" ; ndm_mergedat "$dir/$(basename "$dir").xml"; mv "$fn" "$dir/$(basename "$dir")-filtered.dat"; echo Renamed "$fn" as "$dir/$(basename "$dir")-filtered.dat"; mv "$dir/$(basename "$dir").dat" "$dir/$(basename "$dir")-wideband.dat" ;done
+	while read fn; do 
+		name=$(basename "$fn")
+		dir=$(dirname "$fn")
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			echo
+			cp "./xml/merge1.xml" "$dir/$(basename "$dir").xml"
+			echo Copied merge1.xml to "$dir/$(basename "$dir").xml" 
+			ndm_mergedat "$dir/$(basename "$dir").xml"
+			mv "$fn" "$dir/$(basename "$dir")-filtered.dat"
+			echo Renamed "$fn" as "$dir/$(basename "$dir")-filtered.dat"
+			mv "$dir/$(basename "$dir").dat" "$dir/$(basename "$dir")-wideband.dat"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0:$truncPos}
+			echo
+			cp "./xml/merge1.xml" "$dir/$(basename "$truncStr").xml"
+			echo Copied merge1.xml to "$dir/$(basename "$truncStr").xml"
+			ndm_mergedat "$dir/$(basename "$truncStr").xml"
+			mv "$fn" "$dir/$(basename "$truncStr")-filtered.dat"
+			echo Renamed "$fn" as "$dir/$(basename "$truncStr")-filtered.dat"
+			mv "$dir/$(basename "$truncStr").dat" "$dir/$(basename "$truncStr")-wideband.dat"
+		fi
+	done
 fi
 echo
 
@@ -131,8 +301,25 @@ if [ $change = false ]; then
 	echo Magic.
 	# hue
 else
-	find -name '*.digitalout' |
-	while read fn; do name=$(basename "$fn") ; dir=$(dirname "$fn") ; echo ; cp "../xml/merge2.xml" "$dir/$(basename "$dir").xml" ; echo Copied merge1.xml to "$dir/$(basename "$dir").xml" ; ndm_mergedat "$dir/$(basename "$dir").xml" ;done
+	find -name 'time.time' |
+	while read fn; do 
+		name=$(basename "$fn") 
+		dir=$(dirname "$fn")
+		truncPos=`expr index "$dir" _`
+		if [ $truncPos == 0 ]; then
+			echo
+			cp "./xml/merge2.xml" "$dir/$(basename "$dir").xml"
+			echo Copied merge2.xml to "$dir/$(basename "$dir").xml" 
+			ndm_mergedat "$dir/$(basename "$dir").xml"
+		else
+			truncPos=$truncPos-1
+			truncStr=${dir:0:$truncPos}
+			echo
+			cp "./xml/merge2.xml" "$dir/$(basename "$truncStr").xml"
+			echo Copied merge2.xml to "$dir/$(basename "$truncStr").xml"
+			ndm_mergedat "$dir/$(basename "$truncStr").xml"
+		fi
+	done
 fi
 
 echo Whew! We made it!
