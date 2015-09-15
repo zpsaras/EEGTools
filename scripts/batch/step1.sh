@@ -17,13 +17,11 @@ echo when no rename has actually occurred.
 echo It is important to note that the -n argument 
 echo will not show the whole process\; it\'s purpose
 echo is to give you a reasonable idea if your
-echo diretories are set up correctly
+echo directories are set up correctly
 echo
 
 echo -e '\E[35m'"It is strongly recommended that you make backups!"
 echo -e '\E[m'
-
-#tput sgr0
 
 echo This script should be run from the top-most
 echo level of your EEG Data folder hierarchy.
