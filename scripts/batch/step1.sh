@@ -145,7 +145,7 @@ if [ $change = false ]; then
 			echo "$fn" renamed as "$dir/$(basename "$dir").digitalout"
 		else
 			truncPos=$truncPos-1
-			truncStr=${dir:0;$truncPos}
+			truncStr=${dir:0:$truncPos}
 			echo "$fn" renamed as "$dir/$(basename "$truncStr").digitalout"
 		fi
 
@@ -161,7 +161,7 @@ else
 			echo "$fn" renamed as "$dir/$(basename "$dir").digitalout"
 		else
 			truncPos=$truncPos-1
-			truncStr=${dir:0;$truncPos}
+			truncStr=${dir:0:$truncPos}
 			mv "$fn" "$dir/$(basename "$truncStr").digitalout"
 			echo "$fn" renamed as "$dir/$(basename "$truncStr").digitalout"
 		fi
