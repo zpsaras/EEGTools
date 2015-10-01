@@ -16,34 +16,13 @@ containsBasename () {
 	return 1
 }
 
-#Just testing stuff
-<<"COMMENT"
-find . -name '*.dat' |
-while read fn; do
-	name=$(basename "$fn")
-	dir=$(dirname "$fn")
-	echo
-	echo "Searching for file named $name"
-	find . -name $name |
-	while read fn2; do
-		echo
-		dir2=$(dirname "$fn2")
-		if [ $dir2 == $dir ]; then
-			echo "Skipping repeat find..."
-		else
-			echo "Found new instance of $name"
-			echo "This is where concat steps should be taken"
-		fi
-	done
-done
-COMMENT
-
+originalWD=$(pwd)
+echo Original working directory: "$originalWD"
 echo
 # STRIKE THE EARTH
 FNAMEARR=()
-find . -name '*.dat' > temp.txt
+find "$originalWD" -name '*.dat' > temp.txt
 while read fn; do
-	#name=$(basename "$fn")
 	containsBasename "$fn" "${FNAMEARR[@]}" 
 	if [ $? == 1 ]; then
 		# Does not exist in array
@@ -67,15 +46,34 @@ echo
 # Run "ndm_start concatenate.xml ./" from new folder
 # Finally, make sure to copy XML containing Colors by Julia(tm)
 
+datSuffix=".dat"
+
 for path in "${FNAMEARR[@]}"
 do
+	i=1
+# Create folder for completed files
+	cd "$(dirname "$path")/.."
+	mkdir "$(pwd)"/$(basename "$path" .dat)-concat
+	mkdir "$(pwd)"/$(basename "$path" .dat)-concat/dat
+	# Copy concat xml
+	cp "$originalWD"/xml/concatenate.xml "$(pwd)"/$(basename "$path" .dat)-concat
 	echo
 	echo Working on "$path"
 	echo ========================================================================
-	find . -name $(basename "$path") |
+	find "$originalWD" -name $(basename "$path") |
 	while read fn; do
 		if [[ "$fn" != "$path" ]]; then
-			echo Found "$fn"
+			i=$i+1
+			echo Found "$fn". Move...
+			#mv $(dirname "$fn") "$(pwd)"/$(basename "$path" .dat)-concat
+			mv "$fn" "$(pwd)"/$(basename "$path" .dat)-concat/dat/$(basename "$path" .dat)$i$datSuffix
 		fi
 	done
+# Copy original path to new folder
+	#mv $(dirname "$path") "$(pwd)"/$(basename "$path" .dat)-concat
+	mv "$path" "$(pwd)"/$(basename "$path" .dat)-concat/dat/$(basename "$path" .dat)$i$datSuffix
+	cd "$(pwd)"/$(basename "$path" .dat)-concat
+	ndm_start concatenate.xml
+	cd "$originalWD"
 done
+
