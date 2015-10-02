@@ -322,15 +322,18 @@ fi
 
 echo Whew! We made it!
 
-#echo Changing channels in Acquisition System from 20 to 23...
-#xml_suffix=".xml"
-#if [ $change = false ]; then
-#	find -name '*.xml'
-#else
-#	find -name '*.xml' |
-#	while read fn; do dir=$(dirname "$fn") ; ./xml-edit "$dir/$dir$xml_suffix" /parameters/acquisitionSystem/nChannels "23" "$dir/$dir$xml_suffix" ;done
-#fi
-#echo
+read -r -p "Would you like to make a backup? [y/N] " response2
 
+case $response2 in
+	[yY][eE][sS]|[yY])
+		echo Backing up...
+		echo
+		fname="step1_backup_$(date +%Y-%m-%d_%H%M%S).tar.gz"
+		tar czvf "$fname" 
+		echo Backup saved as "$fname"
+		;;
+	*)
+		;;
+esac
 
 
