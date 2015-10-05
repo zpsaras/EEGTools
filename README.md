@@ -76,8 +76,7 @@ You should have something that looks like this
 
 Then, in a terminal
 ```bash
-chmod 777 step1.sh
+chmod 755 step1.sh step2.sh
 ./step1.sh
+./step2.sh
 ```
-
-Any filenames containing a "_" will be truncated at that point. For instance, "WSC014BPSO_150617_183312" will become "WSC014BPSO". The directory name will not change. When I do this, I will update this document so that it is an accurate reflection.
