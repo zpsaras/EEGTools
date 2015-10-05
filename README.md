@@ -10,7 +10,8 @@ Written for the Suzuki Exercise lab @ NYU
 ├── scripts						Contains automation scripts
 │   ├── batch						Contains scripts that work on groups of folders (batch)
 │   │   ├── old_step1.sh				Old version of step1.sh. Do not use
-│   │   └── step1.sh					Script that renames and merges EEG Data in batch
+│   │   ├── step1.sh					Script that renames and merges EEG Data in batch
+│   │   └── step2.sh					Script that concatenates EEG Data in batch
 │   └── single_folder				Contains scripts that work on single folders
 │       ├── step1.sh					DEPRECATED First half of instructions
 │       └── step2.sh					DEPRECATED Second half of instructions
@@ -38,6 +39,7 @@ You should have something that looks like this
 <pre>
 .
 ├── step1.sh
+├── step2.sh
 ├── WSC014BPSO_150617_181407
 │   ├── amplifier.xml
 │   ├── info.rhd
