@@ -15,7 +15,7 @@
   <offset>0</offset>
  </acquisitionSystem>
  <fieldPotentials>
-  <lfpSamplingRate>1250</lfpSamplingRate>
+  <lfpSamplingRate>2500</lfpSamplingRate>
  </fieldPotentials>
  <anatomicalDescription>
   <channelGroups>
